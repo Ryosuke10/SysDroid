@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SysDroid</string>
+    <string name="label">hello</string>
 </resources>
