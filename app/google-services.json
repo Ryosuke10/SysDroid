@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "682542698514",
+    "project_id": "crypto-snow-170201"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:682542698514:android:60a0073895a35ee0",
+        "android_client_info": {
+          "package_name": "com.example.imairy.sysdroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "682542698514-4gh2vkm1prc32ur22a4f67vkl70vh1eo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.imairy.sysdroid",
+            "certificate_hash": "cd4ee6c09e222552b1a1ca2972b2ae9e50cdb646"
+          }
+        },
+        {
+          "client_id": "682542698514-h3gqja969is9jtv7e1hjdggnjkk6rg3a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHxkOeiZjc7FrWTTfQtbrLNyVaJXGRWP8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
