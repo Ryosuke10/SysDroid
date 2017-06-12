@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">SysDroid</string>
     <string name="label">hello</string>
+
+    <!--　購入確認、完了画面で主に使用 -->
+    <string name="yen">￥</string>
+    <string name="colon">：</string>
+    <string name="confirm">購入を確定する</string>
+    <string name="continue_shopping">ショッピングを続ける</string>
+    <string name="purchase_detail">購入内容</string>
+    <string name="product">商品</string>
+    <string name="total_price">合計代金</string>
+    <string name="thanks_message">ありがとうございます。\n以下の商品を購入しました。</string>
+    <string name="purchase_result">購入結果</string>
+    <!--　購入確認、完了画面で主に使用 -->
+
 </resources>
