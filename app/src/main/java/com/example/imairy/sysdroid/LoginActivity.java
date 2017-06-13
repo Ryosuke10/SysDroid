@@ -54,6 +54,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v.getId() == R.id.sign_in_button) {
             signIn();
+        }else{
+            Intent i = new Intent(this,TestActivity.class);
+            startActivity(i);
         }
     }
 

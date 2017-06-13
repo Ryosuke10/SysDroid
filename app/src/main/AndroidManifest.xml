@@ -22,7 +22,10 @@
         <activity android:name=".AccountActivity" />
         <activity android:name=".BasketActivity" />
         <activity android:name=".ConfirmActivity" />
-        <activity android:name=".CompleteActivity"></activity>
+        <activity android:name=".CompleteActivity" />
+        <activity android:name=".TestActivity"></activity>
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.INTERNET" />
     </application>
 
 </manifest>
