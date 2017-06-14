@@ -22,5 +22,6 @@ public class CompleteActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 }
