@@ -24,8 +24,13 @@
         <activity android:name=".ConfirmActivity" />
         <activity android:name=".CompleteActivity" />
         <activity android:name=".TestActivity"></activity>
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission android:name="android.permission.INTERNET" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginSuccessActivity" />
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/Translucent" />
+
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -20,88 +20,99 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
+//public class LoginActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends Activity implements View.OnClickListener {
 
-    TextView tv;
-    private static final String TAG = "SignInActivity";
-    private static final int RC_SIGN_IN = 9001;
-
-    private GoogleApiClient mGoogleApiClient;
-    private TextView mStatusTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
-
-        mStatusTextView = (TextView) findViewById(R.id.status);
-        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(this);
-        tv = (TextView) findViewById(R.id.textView1);
-        GoogleSignInOptions gso = new GoogleSignInOptions
-                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.sign_in_button) {
-            signIn();
-        }else{
-            Intent i = new Intent(this,TestActivity.class);
-            startActivity(i);
-        }
-    }
-
-    private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResult(result);
-        }
-    }
-
-    private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            // サインインが成功したら、サインインボタンを消して、ユーザー名を表示する
-            GoogleSignInAccount acct = result.getSignInAccount();
-            mStatusTextView.setText("OK" + acct.getDisplayName());
-            updateUI(true);
-        } else {
-            // Signed out, show unauthenticated UI.
-            updateUI(false);
-        }
-    }
-
-    private void updateUI(boolean signedIn) {
-        if (signedIn) {
-            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
-        } else {
-//            mStatusTextView.setText(R.string.signed_out);
-
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-//            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
-        }
-    }
-
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Intent i = new Intent(this,MainActivity.class);
+        startActivity(i);
 
     }
+//    TextView tv;
+//    private static final String TAG = "SignInActivity";
+//    private static final int RC_SIGN_IN = 9001;
+//
+//    private GoogleApiClient mGoogleApiClient;
+//    private TextView mStatusTextView;
+
+//
+//        mStatusTextView = (TextView) findViewById(R.id.status);
+//        SignInButton signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+//        signInButton.setOnClickListener(this);
+//        tv = (TextView) findViewById(R.id.textView1);
+//        GoogleSignInOptions gso = new GoogleSignInOptions
+//                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+//                .build();
+//
+//    }
+//
+//    @Override
+//    public void onClick(View v) {
+//        if(v.getId() == R.id.sign_in_button) {
+//            signIn();
+//        }else{
+//            Intent i = new Intent(this,TestActivity.class);
+//            startActivity(i);
+//        }
+//    }
+//
+//    private void signIn() {
+//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == RC_SIGN_IN) {
+//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+//            handleSignInResult(result);
+//        }
+//    }
+//
+//    private void handleSignInResult(GoogleSignInResult result) {
+//        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+//        if (result.isSuccess()) {
+//            // サインインが成功したら、サインインボタンを消して、ユーザー名を表示する
+//            GoogleSignInAccount acct = result.getSignInAccount();
+//            mStatusTextView.setText("OK" + acct.getDisplayName());
+//            updateUI(true);
+//        } else {
+//            // Signed out, show unauthenticated UI.
+//            updateUI(false);
+//        }
+//    }
+//
+//    private void updateUI(boolean signedIn) {
+//        if (signedIn) {
+//            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+////            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
+//        } else {
+////            mStatusTextView.setText(R.string.signed_out);
+//
+//            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+////            findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
+//        }
+//    }
+//
+//
+//    @Override
+//    public void onConnectionFailed(ConnectionResult connectionResult) {
+//
+//    }
 }
