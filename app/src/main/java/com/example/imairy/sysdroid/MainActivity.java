@@ -52,14 +52,21 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.bt_go:
-                Explode explode = new Explode();
-                explode.setDuration(500);
+                Login login = new Login();
+                String id = ((EditText)findViewById(R.id.et_username)).getText().toString();
+                String pass = ((EditText)findViewById(R.id.et_password)).getText().toString();
+                login.execute(id,pass);
+                //////login.phpの中でエラーでてるから底修正！！！！！！！！！！！！１
 
-                getWindow().setExitTransition(explode);
-                getWindow().setEnterTransition(explode);
-                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
-                Intent i2 = new Intent(this,ItemListActivity.class);
-                startActivity(i2, oc2.toBundle());
+                //画面遷移&アニメーション
+//                Explode explode = new Explode();
+//                explode.setDuration(500);
+//
+//                getWindow().setExitTransition(explode);
+//                getWindow().setEnterTransition(explode);
+//                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
+//                Intent i2 = new Intent(this,ItemListActivity.class);
+//                startActivity(i2, oc2.toBundle());
                 break;
         }
     }

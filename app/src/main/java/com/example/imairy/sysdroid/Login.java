@@ -1,33 +1,23 @@
 package com.example.imairy.sysdroid;
 
+/**
+ * Created by imairy on 2017/06/19.
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.Socket;
 import java.net.URL;
 
-/**
- * Created by imairy on 2017/06/13.
- */
-
-
-
-public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
+public class Login extends AsyncTask<String, Integer, Integer> {
 
     @Override
     protected void onPreExecute() {
@@ -39,18 +29,17 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
     @Override
     protected Integer doInBackground(String... contents) {
 
-        Log.d("connect!!", "TestPHP!!");
+        Log.d("cont0",contents[0]);
+        Log.d("cont1",contents[1]);
         String test = "{\"user\":{" +
-                "\"name\":\"name1\","+
-                "\"password\":\"password\","+
-                "\"password_confirmation\":\"password\""+
-                "}}";
+                "\"id\":\"" + contents[0] + "\","+
+                "\"pass\":\"" + contents[1] + "\"}}";
         String buffer = "";
         HttpURLConnection con = null;
 
         try {
 
-            URL url = new URL("http://10.0.14.63:80/dbconnect.php");
+            URL url = new URL("http://10.0.14.63:80/login.php");
 
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -64,7 +53,6 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
             // タイムアウト
             con.setReadTimeout(100000);
             con.setConnectTimeout(100000);
-//            con.setRequestProperty("json",json);//irazu
 
             OutputStream os = con.getOutputStream();
             PrintStream ps = new PrintStream(os);
