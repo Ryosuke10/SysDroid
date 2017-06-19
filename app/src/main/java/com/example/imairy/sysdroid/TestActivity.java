@@ -18,12 +18,12 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v){
-//        Button b = (Button)findViewById(R.id.testbutton);
-//        b.setText("click");
-//        TestPHPAccess php = new TestPHPAccess();
-//
-//        Log.d("php1","aaa");
-//        Log.d("php2",php.execute("a").toString());
+        Button b = (Button)findViewById(R.id.testbutton);
+        b.setText("click");
+        TestPHPAccess php = new TestPHPAccess();
+
+        Log.d("php1","aaa");
+        Log.d("php2",php.execute("a").toString());
     }
 
 }

@@ -46,7 +46,7 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
 
         try {
 
-            URL url = new URL("http://10.0.14.85:8080/WebAppStd/TestServlet");
+            URL url = new URL("http://10.0.14.63:80/dbconnect.php");
             int length = json.getBytes("UTF-8").length;
 
             con = (HttpURLConnection) url.openConnection();
@@ -58,13 +58,18 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
             con.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             con.setFixedLengthStreamingMode(length);
             // タイムアウト
-            con.setReadTimeout(10000);
-            con.setConnectTimeout(10000);
+            con.setReadTimeout(1000000);
+            con.setConnectTimeout(1000000);
+            con.setRequestProperty("json",json);
             con.connect();
             OutputStream os = con.getOutputStream();
+
             os.write(json.getBytes("UTF-8"));
             os.flush();
             os.close();
+            Log.d("a",con.getRequestMethod());
+            Log.d("TE",con.getRequestProperty("Content-Type"));
+
 
 
             Log.d("ERRLOG",Integer.toString(con.getResponseCode()));

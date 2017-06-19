@@ -33,8 +33,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent i = new Intent(this,MainActivity.class);
-        startActivity(i);
+        switch (v.getId()){
+            case R.id.button:
+                Intent i = new Intent(this,MainActivity.class);
+                startActivity(i);
+                break;
+            case R.id.button2:
+                Intent i1 = new Intent(this,TestActivity.class);
+                startActivity(i1);
+                break;
+        }
 
     }
 //    TextView tv;
