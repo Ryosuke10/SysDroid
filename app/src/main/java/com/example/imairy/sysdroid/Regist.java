@@ -1,9 +1,5 @@
 package com.example.imairy.sysdroid;
 
-/**
- * Created by imairy on 2017/06/19.
- */
-
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -20,9 +16,13 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
-public class Login extends AsyncTask<String, Integer, UserBean> {
+/**
+ * Created by imairy on 2017/06/20.
+ */
 
-    private CallBackTask callbacktask;
+public class Regist extends AsyncTask<String,Void,UserBean> {
+
+    private Regist.CallBackTask callbacktask;
 
     /**
      * コールバック用のstaticなclass
@@ -32,7 +32,7 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
         }
     }
 
-    public void setOnCallBack(CallBackTask _cbj) {
+    public void setOnCallBack(com.example.imairy.sysdroid.Regist.CallBackTask _cbj) {
         callbacktask = _cbj;
     }
 
@@ -47,18 +47,17 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
     protected UserBean doInBackground(String... contents) {
 
         UserBean userBean = new UserBean();
-        Log.d("cont0",contents[0]);
-        Log.d("cont1",contents[1]);
+
         boolean isLogin = false;
-        String test = "{\"user\":{" +
-                "\"id\":\"" + contents[0] + "\","+
+        String registData = "{\"user\":{" +
+                "\"name\":\"" + contents[0] + "\"," +
                 "\"pass\":\"" + contents[1] + "\"}}";
         String buffer = "";
         HttpURLConnection con = null;
 
         try {
 
-            URL url = new URL("http://10.0.14.151:80/login.php");
+            URL url = new URL("http://10.0.14.151:80/regist.php");
 
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -75,12 +74,12 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
 
             OutputStream os = con.getOutputStream();
             PrintStream ps = new PrintStream(os);
-            ps.write(test.getBytes("UTF-8"));
+            ps.write(registData.getBytes("UTF-8"));
             con.connect();
             ps.close();
             os.close();
 
-            Log.d("HTTPLOG",Integer.toString(con.getResponseCode()));
+            Log.d("HTTPLOG", Integer.toString(con.getResponseCode()));
             BufferedReader reader =
                     new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
             StringBuffer sb = new StringBuffer();
@@ -88,7 +87,7 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
                 sb.append(buffer);
             }
 
-            Log.d("return_Json",sb.toString());
+            Log.d("return_Json", sb.toString());
 
             //サーバーから受信した文字列をJSONObjectに変換
             JSONObject jsonObject = new JSONObject(sb.toString());
@@ -102,8 +101,7 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
 //                JSONObject jsonObject = jsonArray.getJSONObject(i);
 //                Log.d("HTTP REQ", jsonObject.getString("name"));
 //            }
-                isLogin = true;
-            }catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
                 Log.d("LOGINERROR", "loginエラーです");
                 //TODO:loginエラー時の処理追記
@@ -116,10 +114,9 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             con.disconnect();
         }
-        UserLoginData.isLogin = isLogin;
         return userBean;
     }
 
@@ -128,6 +125,4 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
         super.onPostExecute(userBean);
         callbacktask.CallBack(userBean);
     }
-
 }
-
