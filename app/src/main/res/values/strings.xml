@@ -12,6 +12,9 @@
     <string name="total_price">合計代金</string>
     <string name="thanks_message">ありがとうございます。\n以下の商品を購入しました。</string>
     <string name="purchase_result">購入結果</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--　購入確認、完了画面で主に使用 -->
 
 </resources>
