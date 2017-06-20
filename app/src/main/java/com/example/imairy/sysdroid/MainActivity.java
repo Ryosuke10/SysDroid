@@ -9,10 +9,11 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClick(View view) {
+    public void onClick(View view) throws InterruptedException {
         switch (view.getId()) {
             case R.id.fab:
                 getWindow().setExitTransition(null);
@@ -52,15 +53,46 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.bt_go:
-                Explode explode = new Explode();
-                explode.setDuration(500);
+                Login login = new Login();
+                String id = ((EditText)findViewById(R.id.et_username)).getText().toString();
+                String pass = ((EditText)findViewById(R.id.et_password)).getText().toString();
+                login.setOnCallBack(new Login.CallBackTask(){
 
-                getWindow().setExitTransition(explode);
-                getWindow().setEnterTransition(explode);
-                ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
-                Intent i2 = new Intent(this,ItemListActivity.class);
-                startActivity(i2, oc2.toBundle());
-                break;
+                    @Override
+                    public void CallBack(UserBean userBean) {
+                        super.CallBack(userBean);
+                        // resultにはdoInBackgroundの返り値が入ります。
+                        // ここからAsyncTask処理後の処理を記述します。
+                        Log.i("AsyncTaskCallback", "非同期処理が終了しました。");
+                        if(UserLoginData.isLogin) {
+                            Log.i("AsyncTaskCallback", "ItemLIstへ");
+                            itemListTransition(userBean);
+                        }else{
+                            Log.i("AsyncTaskCallback", "POPTOAST");
+                            popToast();
+                        }
+                    }
+
+                });
+                login.execute(id,pass);
+                //処理が終わるまでストップ
         }
+    }
+
+    public void itemListTransition(UserBean userBean){
+        //画面遷移&アニメーション
+        Explode explode = new Explode();
+        explode.setDuration(500);
+
+        getWindow().setExitTransition(explode);
+        getWindow().setEnterTransition(explode);
+        ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
+        Intent i2 = new Intent(this,ItemListActivity.class);
+        i2.putExtra("UserBean",userBean);
+        startActivity(i2, oc2.toBundle());
+    }
+
+    public void popToast(){
+        Toast.makeText(this,"ログインに失敗しました。\nIDかパスワードが間違っています。", Toast.LENGTH_SHORT).show();
     }
 }

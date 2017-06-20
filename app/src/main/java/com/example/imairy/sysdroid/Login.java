@@ -1,33 +1,40 @@
 package com.example.imairy.sysdroid;
 
+/**
+ * Created by imairy on 2017/06/19.
+ */
+
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
-import java.net.Socket;
 import java.net.URL;
 
-/**
- * Created by imairy on 2017/06/13.
- */
+public class Login extends AsyncTask<String, Integer, UserBean> {
 
+    private CallBackTask callbacktask;
 
+    /**
+     * コールバック用のstaticなclass
+     */
+    public static class CallBackTask {
+        public void CallBack(UserBean userBean) {
+        }
+    }
 
-public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
+    public void setOnCallBack(CallBackTask _cbj) {
+        callbacktask = _cbj;
+    }
 
     @Override
     protected void onPreExecute() {
@@ -37,20 +44,21 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
 
 
     @Override
-    protected Integer doInBackground(String... contents) {
+    protected UserBean doInBackground(String... contents) {
 
-        Log.d("connect!!", "TestPHP!!");
+        UserBean userBean = new UserBean();
+        Log.d("cont0",contents[0]);
+        Log.d("cont1",contents[1]);
+        boolean isLogin = false;
         String test = "{\"user\":{" +
-                "\"name\":\"name1\","+
-                "\"password\":\"password\","+
-                "\"password_confirmation\":\"password\""+
-                "}}";
+                "\"id\":\"" + contents[0] + "\","+
+                "\"pass\":\"" + contents[1] + "\"}}";
         String buffer = "";
         HttpURLConnection con = null;
 
         try {
 
-            URL url = new URL("http://10.0.14.63:80/dbconnect.php");
+            URL url = new URL("http://10.0.14.151:80/login.php");
 
             con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
@@ -64,7 +72,6 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
             // タイムアウト
             con.setReadTimeout(100000);
             con.setConnectTimeout(100000);
-//            con.setRequestProperty("json",json);//irazu
 
             OutputStream os = con.getOutputStream();
             PrintStream ps = new PrintStream(os);
@@ -82,11 +89,25 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
             }
 
             Log.d("return_Json",sb.toString());
+
+            //サーバーから受信した文字列をJSONObjectに変換
+            JSONObject jsonObject = new JSONObject(sb.toString());
+
+            try {
+                //Beanにユーザー情報格納
+                userBean = new UserBean(jsonObject.getString("id"), jsonObject.getString("pass"), jsonObject.getString("name"));
+                Log.d("jsonget", jsonObject.getString("name"));
 //            JSONArray jsonArray = new JSONArray(buffer);
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                JSONObject jsonObject = jsonArray.getJSONObject(i);
 //                Log.d("HTTP REQ", jsonObject.getString("name"));
 //            }
+                isLogin = true;
+            }catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("LOGINERROR", "loginエラーです");
+                //TODO:loginエラー時の処理追記
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
@@ -98,14 +119,15 @@ public class TestPHPAccess extends AsyncTask<String, Integer, Integer> {
         }finally {
             con.disconnect();
         }
-        return 1;
+        UserLoginData.isLogin = isLogin;
+        return userBean;
     }
 
-//    @Override
-//    protected void onPostExecute(String result) {
-//        super.onPostExecute(result);
-//        // doInBackground後処理
-//    }
+    @Override
+    protected void onPostExecute(UserBean userBean) {
+        super.onPostExecute(userBean);
+        callbacktask.CallBack(userBean);
+    }
 
 }
 
