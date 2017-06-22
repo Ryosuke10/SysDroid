@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.R.id.list;
+
 public class ItemListActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     @Override
@@ -30,21 +33,23 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final String genre[] = {"フード","ファッション","ホビー"};
+        final ArrayList<String> list = new ArrayList<String>();
 
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return TestFragment.newInstance(position + 1);
+                return ItemFragment.newInstance(position + 1, list);
             }
 
             @Override
             public CharSequence getPageTitle(int position) {
-                return "tab " + (position + 1);
+                return genre[position];
             }
 
             @Override
             public int getCount() {
-                return 3;
+                return genre.length;
             }
         };
 
@@ -52,10 +57,11 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
         viewPager.addOnPageChangeListener(this);
 
         tabLayout.setupWithViewPager(viewPager);
+
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    public void onPageScrolled(int position, float positionOfafset, int positionOffsetPixels) {
 
     }
 
@@ -69,71 +75,46 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
 
     }
 
-    public static class TestFragment extends Fragment {
-
-        public TestFragment() {
+    public static class ItemFragment extends Fragment {
+        private GridView mGridView;
+        private ArrayList<String> mArrayList = new ArrayList<String>();
+        public ItemFragment() {
         }
 
-        public static TestFragment newInstance(int page) {
+        public static ItemFragment newInstance(int page,ArrayList<String> list) {
+            ItemFragment fragment = new ItemFragment();
             Bundle args = new Bundle();
-            args.putInt("page", page);
-            TestFragment fragment = new TestFragment();
+            args.putStringArrayList("array",list);
             fragment.setArguments(args);
             return fragment;
         }
 
-        @Nullable
+        @Override
+        public void onCreate(Bundle savedInstanceState){
+            super.onCreate(savedInstanceState);
+            Bundle args = getArguments();
+            if(args != null){
+                mArrayList = args.getStringArrayList("array");
+            }
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            int page = getArguments().getInt("page", 0);
-            View view = inflater.inflate(R.layout.item_grid, container, false);
+            super.onCreateView(inflater,container,savedInstanceState);
+            return inflater.inflate(R.layout.item_grid,container,false);
+            /*View view = inflater.inflate(R.layout.item_grid, container, false);
             ArrayList<String> list = new ArrayList<String>();
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,list);
-            switch (page){
-                case 1:
-                    list.add("A");
-                    list.add("B");
-                    list.add("C");
-                    list.add("D");
-                    list.add("E");
-                    list.add("F");
-                    list.add("G");
-                    list.add("H");
-                    list.add("I");
-                    list.add("J");
+            return view;*/
+        }
 
-                    ((GridView) view.findViewById(R.id.gridView)).setAdapter(adapter);
-                    return view;
-                case 2:
-                    list.add("あ");
-                    list.add("い");
-                    list.add("う");
-                    list.add("え");
-                    list.add("お");
-                    list.add("か");
-                    list.add("き");
-                    list.add("く");
-                    list.add("け");
-                    list.add("こ");
-                    ((GridView) view.findViewById(R.id.gridView)).setAdapter(adapter);
-                    return view;
-                case 3:
-                    list.add("1");
-                    list.add("2");
-                    list.add("3");
-                    list.add("4");
-                    list.add("5");
-                    list.add("6");
-                    list.add("7");
-                    list.add("8");
-                    list.add("9");
-                    list.add("10");
-                    ((GridView) view.findViewById(R.id.gridView)).setAdapter(adapter);
-                    return view;
-                default :
-                    break;
-            }
-            return view;
+        @Override
+        public void onViewCreated(View view,Bundle savedInstanceState){
+            super.onViewCreated(view,savedInstanceState);
+            mGridView = (GridView)view.findViewById(R.id.gridView);
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,mArrayList);
+            mGridView.setAdapter(adapter);
         }
     }
 }
