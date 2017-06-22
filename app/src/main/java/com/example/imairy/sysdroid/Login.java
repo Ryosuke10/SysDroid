@@ -50,75 +50,27 @@ public class Login extends AsyncTask<String, Integer, UserBean> {
         Log.d("cont0",contents[0]);
         Log.d("cont1",contents[1]);
         boolean isLogin = false;
-        String test = "{\"user\":{" +
+        String inputData = "{\"user\":{" +
                 "\"id\":\"" + contents[0] + "\","+
                 "\"pass\":\"" + contents[1] + "\"}}";
-        String buffer = "";
-        HttpURLConnection con = null;
+        ConnectionServer connectionServer = new ConnectionServer();
+
+        JSONObject jsonObject = connectionServer.connection("login.php",inputData);
 
         try {
-
-            URL url = new URL("http://10.0.14.151:80/login.php");
-
-            con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("POST");
-            con.setInstanceFollowRedirects(false);
-            con.setRequestProperty("Accept-Language", "jp");
-            con.setDoOutput(true);
-            con.setDoInput(true);
-//            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");//get,postで送りたい場合
-            con.setRequestProperty("Content-Type", "application/json; charset=utf-8");//jsonで送りたい場合
-            con.setChunkedStreamingMode(0);
-            // タイムアウト
-            con.setReadTimeout(100000);
-            con.setConnectTimeout(100000);
-
-            OutputStream os = con.getOutputStream();
-            PrintStream ps = new PrintStream(os);
-            ps.write(test.getBytes("UTF-8"));
-            con.connect();
-            ps.close();
-            os.close();
-
-            Log.d("HTTPLOG",Integer.toString(con.getResponseCode()));
-            BufferedReader reader =
-                    new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
-            StringBuffer sb = new StringBuffer();
-            while ((buffer = reader.readLine()) != null) {
-                sb.append(buffer);
-            }
-
-            Log.d("return_Json",sb.toString());
-
-            //サーバーから受信した文字列をJSONObjectに変換
-            JSONObject jsonObject = new JSONObject(sb.toString());
-
-            try {
+            if(jsonObject != null) {
                 //Beanにユーザー情報格納
                 userBean = new UserBean(jsonObject.getString("id"), jsonObject.getString("pass"), jsonObject.getString("name"));
                 Log.d("jsonget", jsonObject.getString("name"));
-//            JSONArray jsonArray = new JSONArray(buffer);
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject jsonObject = jsonArray.getJSONObject(i);
-//                Log.d("HTTP REQ", jsonObject.getString("name"));
-//            }
                 isLogin = true;
-            }catch (JSONException e) {
-                e.printStackTrace();
-                Log.d("LOGINERROR", "loginエラーです");
-                //TODO:loginエラー時の処理追記
+            }else{
+                Log.e("loginerror","ログイン失敗");
             }
-        } catch (MalformedURLException e) {
+        }catch (JSONException e) {
             e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }finally {
-            con.disconnect();
+            Log.e("LOGINERROR", "loginエラーです");
         }
+
         UserLoginData.isLogin = isLogin;
         return userBean;
     }

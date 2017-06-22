@@ -36,7 +36,7 @@ public class Regist extends AsyncTask<String,Void,UserBean> {
     @Override
     protected UserBean doInBackground(String... contents) {
 
-        UserBean userBean = new UserBean();
+        UserBean userBean = null;
 
         String registData = "{\"user\":{" +
                 "\"name\":\"" + contents[0] + "\"," +
@@ -44,9 +44,13 @@ public class Regist extends AsyncTask<String,Void,UserBean> {
         ConnectionServer connectionServer = new ConnectionServer();
         JSONObject jsonObject = connectionServer.connection("regist.php",registData);
         try {
-            //Beanにユーザー情報格納
-            userBean = new UserBean(jsonObject.getString("id"), jsonObject.getString("pass"), jsonObject.getString("name"));
-            Log.d("jsonget", jsonObject.getString("name"));
+            if(jsonObject == null) {
+                Log.d("RegistID:","Registに失敗しました。");
+            }else {
+                //Beanにユーザー情報格納
+                userBean = new UserBean(jsonObject.getString("id"), jsonObject.getString("pass"), jsonObject.getString("name"));
+                Log.d("jsonget", jsonObject.getString("name"));
+            }
 //            JSONArray jsonArray = new JSONArray(buffer);
 //            for (int i = 0; i < jsonArray.length(); i++) {
 //                JSONObject jsonObject = jsonArray.getJSONObject(i);

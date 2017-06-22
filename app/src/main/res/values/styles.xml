@@ -17,11 +17,17 @@
         <!-- Toolarのスタイル -->
         <item name="toolbarStyle">@style/MyApp.Toolbar</item>
     </style>
+
     <style name="MyApp.Toolbar" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">@color/toolbar_bg</item>
-        <item name="titleTextAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
-        <item name="subtitleTextAppearance">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
+        <item name="titleTextAppearance">
+            @style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse
+        </item>
+        <item name="subtitleTextAppearance">
+            @style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse
+        </item>
     </style>
+
     <style name="PrimaryButtonStyle" parent="Theme.AppCompat">
         <!--ボタンの色-->
         <item name="colorButtonNormal">#FF5722</item>
@@ -33,15 +39,26 @@
         <!--ボタンの色-->
         <item name="colorButtonNormal">#FF4081</item>
     </style>
+
     <style name="Translucent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">#0288D1</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
 
     </style>
+
     <style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
         <item name="colorControlActivated">#FFCC00</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

@@ -33,8 +33,13 @@ public class MainActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.et_password);
         btGo = (Button)findViewById(R.id.bt_go);
         cv = (CardView) findViewById(R.id.cv);
-        fab = (FloatingActionButton)findViewById(R.id.fab) ;
+        fab = (FloatingActionButton)findViewById(R.id.fab);
 
+        if(getIntent().hasExtra("UserBean")) {
+            UserBean userBean = (UserBean) getIntent().getSerializableExtra("UserBean");
+            etUsername.setText(userBean.getId());
+            etPassword.setText(userBean.getPass());
+        }
 
     }
 

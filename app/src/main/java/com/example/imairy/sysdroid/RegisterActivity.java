@@ -147,7 +147,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // resultにはdoInBackgroundの返り値が入ります。
                         // ここからAsyncTask処理後の処理を記述します。
                         Log.i("AsyncTaskCallback", "非同期処理が終了しました。");
-                        if(userBean.getId() != "u0000") {
+                        if(userBean != null) {
                             Log.i("AsyncTaskCallback", "create" + userBean.getId());
                             returnMainActivity(userBean);
                         }else{

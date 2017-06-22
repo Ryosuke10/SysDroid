@@ -67,8 +67,10 @@ public class ConnectionServer {
 
             Log.d("return_Json", sb.toString());
 
-            //サーバーから受信した文字列をJSONObjectに変換
-            jsonObject = new JSONObject(sb.toString());
+            if(sb.toString() != null) {
+                //サーバーから受信した文字列をJSONObjectに変換
+                jsonObject = new JSONObject(sb.toString());
+            }
         }catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (ProtocolException e) {
