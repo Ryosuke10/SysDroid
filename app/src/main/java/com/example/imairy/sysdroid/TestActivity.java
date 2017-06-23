@@ -2,20 +2,15 @@ package com.example.imairy.sysdroid;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import static java.security.AccessController.getContext;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener {
 
@@ -53,7 +48,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         String sharedElementName = "image";
         iv.setTransitionName(sharedElementName);
 
-        Intent intent = new Intent(this, TestSubActivitiy.class);
+        Intent intent = new Intent(this, ItemDetailsActivity.class);
         startActivity(intent,
                 ActivityOptions.makeSceneTransitionAnimation(this, iv, sharedElementName)
                         .toBundle());

@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">SysDroid</string>
     <string name="label">こんにちは</string>
+    <string name="item_description_label">商品説明</string>
+    <string name="buy">購入</string>
 </resources>

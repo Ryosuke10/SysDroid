@@ -11,7 +11,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_details);
 
         String sharedElementName = "image";
-        findViewById(R.id.imageView).setTransitionName(sharedElementName);
+        findViewById(R.id.itemView).setTransitionName(sharedElementName);
 
 
     }

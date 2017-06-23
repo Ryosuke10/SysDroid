@@ -10,4 +10,5 @@
     <dimen name="button_height">36dp</dimen>
     <dimen name="button_min_width">88dp</dimen>
     <dimen name="button_horizontal_padding">8dp</dimen>
+    <dimen name="text_header_size">18sp</dimen>
 </resources>
