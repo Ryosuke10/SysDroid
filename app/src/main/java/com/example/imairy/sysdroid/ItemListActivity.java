@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.id.list;
+import static android.R.id.switch_widget;
 
 public class ItemListActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
@@ -41,10 +42,6 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                switch (position){
-                    case 0:
-                        return ItemFragment.newInstance(position);
-                }
                 return ItemFragment.newInstance(position);
             }
             @Override
@@ -57,10 +54,10 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
             }
         };
 
-        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
 
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -94,9 +91,9 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
-
+            int page = getArguments().getInt("ARG_POSITION",0);
             adapter = new ArrayAdapter<String>(getActivity(),R.layout.item_list,R.id.text_view);
-            adapter.addAll(createDataList(100));
+            adapter.addAll(createDataList(100,page));
         }
 
         @Override
@@ -107,12 +104,30 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
             list.setAdapter(adapter);
             return parent;
         }
-        private static List<String> createDataList(int counts){
-            List<String> list = new ArrayList<String>();
-            for(int i= 0; i<counts;i++){
-                list.add("i="+i);
+        private static List<String> createDataList(int counts,int page){
+            List[] list = new ArrayList[3];
+            for(int i = 0;i<list.length;i++){
+                list[i] = new ArrayList();
             }
-            return list;
+            switch (page) {
+                case 0:
+                    for(int i= 0; i<counts;i++){
+                        list[0].add("i="+i);
+                    }
+                    break;
+                case 1:
+                    for(int i=counts;i>0;i--){
+                        list[1].add("i="+i);
+                    }
+                    break;
+                case 2:
+                    for(int i=0;i<10;i++){
+                        list[2].add("i="+i);
+                    }
+                default:
+                    break;
+            }
+            return list[page];
         }
     }
 }
