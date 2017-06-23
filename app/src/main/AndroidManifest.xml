@@ -14,7 +14,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ItemListActivity" />
         <activity android:name=".ItemDetailsActivity" />
@@ -22,22 +28,13 @@
         <activity android:name=".BasketActivity" />
         <activity android:name=".ConfirmActivity" />
         <activity android:name=".CompleteActivity" />
-        <activity android:name=".TestActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".TestActivity"
+            android:theme="@style/AppTheme.NoActionBar" ><!-- アクションバー実装するとこNoActionBarにする -->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".LoginSuccessActivity" />
         <activity
             android:name=".RegisterActivity"
             android:theme="@style/Translucent" />
-        <activity
-            android:name=".Tester2"
-            android:label="@string/title_activity_tester2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TestSubActivitiy"></activity>
     </application>
 
 </manifest>
