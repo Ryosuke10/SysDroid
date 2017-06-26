@@ -1,6 +1,8 @@
 package com.example.imairy.sysdroid;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -11,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.transition.Explode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.R.id.list;
 import static android.R.id.switch_widget;
@@ -80,20 +85,45 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
         }
 
         public static ItemFragment newInstance(int position) {
+            switch(position){
+                case 0:
+                    ItemFragment fragment0 = new ItemFragment();
+                    Bundle args0 = new Bundle();
+                    args0.putInt("ARG_POSITION",position);
+                    fragment0.setArguments(args0);
+                    return fragment0;
+                case 1:
+                    ItemFragment fragment1 = new ItemFragment();
+                    Bundle args1 = new Bundle();
+                    args1.putInt("ARG_POSITION",position);
+                    fragment1.setArguments(args1);
+                    return fragment1;
+                case 2:
+                    ItemFragment fragment2 = new ItemFragment();
+                    Bundle args2 = new Bundle();
+                    args2.putInt("ARG_POSITION",position);
+                    fragment2.setArguments(args2);
+                    return fragment2;
+            }/*
             ItemFragment fragment = new ItemFragment();
             Bundle args = new Bundle();
             args.putInt("ARG_POSITION",position);
             fragment.setArguments(args);
-            return fragment;
+            return fragment;*/
+            return null;
         }
 
         private ArrayAdapter<String> adapter;
+        //private ImageAdapter[] adapter = new ImageAdapter[3];
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
             int page = getArguments().getInt("ARG_POSITION",0);
-            adapter = new ArrayAdapter<String>(getActivity(),R.layout.item_list,R.id.text_view);
+
+            adapter = new ArrayAdapter<String>(getActivity(),R.layout.item_list,R.id.item_name);
+            //createDataList(表示するデータの個数,ページ番号)
             adapter.addAll(createDataList(100,page));
+
         }
 
         @Override
@@ -111,17 +141,18 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
             }
             switch (page) {
                 case 0:
+                    //左タブ（
                     for(int i= 0; i<counts;i++){
                         list[0].add("i="+i);
                     }
                     break;
                 case 1:
-                    for(int i=counts;i>0;i--){
+                    for(int i= 0; i<counts;i++){
                         list[1].add("i="+i);
                     }
                     break;
                 case 2:
-                    for(int i=0;i<10;i++){
+                    for(int i= 0; i<counts;i++){
                         list[2].add("i="+i);
                     }
                 default:
@@ -129,5 +160,62 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
             }
             return list[page];
         }
+    }
+}
+
+class ImageAdapter extends BaseAdapter {
+    private LayoutInflater inflater;
+    private int layoutId;
+    private String[] names;
+    private Bitmap[] bmapIcons;
+
+    static class ViewHolder {
+        TextView text;
+        ImageView icon;
+    }
+
+    public ImageAdapter(Context context, int itemLayoutId, String[] iconNames, int[] iconItems ){
+        inflater = LayoutInflater.from(context);
+        layoutId = itemLayoutId;
+        names = iconNames;
+        bmapIcons = new Bitmap[iconItems.length];
+
+        for(int i=0;i<iconItems.length;i++) {
+            bmapIcons[i] = BitmapFactory.decodeResource(context.getResources(), iconItems[i]);
+        }
+    }
+
+    @Override
+    public View getView(int position,View convertView, ViewGroup parent){
+        ViewHolder holder;
+
+        if(convertView == null){
+            convertView = inflater.inflate(layoutId,null);
+            holder = new ViewHolder();
+            holder.icon = (ImageView) convertView.findViewById(R.id.icon_item);
+            holder.text = (TextView) convertView.findViewById(R.id.item_name);
+            convertView.setTag(holder);
+        }else{
+            holder = (ViewHolder) convertView.getTag();
+        }
+        holder.text.setText(String.valueOf(position+1)+":"+names[position]);
+        holder.icon.setImageBitmap(bmapIcons[position]);
+
+        return convertView;
+    }
+
+    @Override
+    public int getCount(){
+        return names.length;
+    }
+
+    @Override
+    public Object getItem(int position){
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position){
+        return position;
     }
 }
