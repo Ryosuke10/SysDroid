@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     Button btGo;
     CardView cv;
     FloatingActionButton fab;
-    Intent i2;//TODO ここItemListActivityに修正
+    Intent i2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 Login login = new Login();
                 String id = ((EditText)findViewById(R.id.et_username)).getText().toString();
                 String pass = ((EditText)findViewById(R.id.et_password)).getText().toString();
-                i2 = new Intent(this,TestActivity.class);
+                i2 = new Intent(this,ItemListActivity.class);
 
                 login.setOnCallBack(new Login.CallBackTask(){
 

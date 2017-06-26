@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".ItemListActivity" />
+        <activity android:name=".ItemListActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ItemDetailsActivity" />
         <activity android:name=".AccountActivity" />
         <activity android:name=".BasketActivity" />

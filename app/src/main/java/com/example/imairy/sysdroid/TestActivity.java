@@ -38,7 +38,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             list.add(itemBean.getItem_name());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
-        gridView = (GridView) findViewById(R.id.test);
+        gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(this);
 

@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.imairy.sysdroid.TestActivity"
+    tools:context="com.example.imairy.sysdroid.ItemListActivity"
     tools:showIn="@layout/app_bar">
 
     <GridView
-        android:id="@+id/test"
+        android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="false"
+        android:background="@color/cardview_light_background"
+        android:gravity="center"
         android:numColumns="3"
-        android:stretchMode="columnWidth"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp" />
+        android:verticalSpacing="1dp"
+        android:horizontalSpacing="1dp"
+        android:stretchMode="columnWidth">
+    </GridView>
 </android.widget.RelativeLayout>
