@@ -32,11 +32,11 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
 //        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         UserBean userBean = (UserBean)getIntent().getSerializableExtra("UserBean");
+        ArrayList<ItemBean> itemBeanArrayList = (ArrayList<ItemBean>)getIntent().getSerializableExtra("ItemList");
         list = new ArrayList<String>();
-        list.add("A");
-        list.add("B");
-        list.add("C");
-        list.add("D");
+        for(ItemBean itemBean : itemBeanArrayList) {
+            list.add(itemBean.getItem_name());
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list);
         gridView = (GridView) findViewById(R.id.test);
         gridView.setAdapter(adapter);
