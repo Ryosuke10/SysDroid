@@ -5,5 +5,5 @@ package com.example.imairy.sysdroid;
  */
 
 public class IPAddress {
-    final static String IPADDRESS = "10.0.14.207";
+    final static String IPADDRESS = "10.0.14.53";
 }

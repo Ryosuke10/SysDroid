@@ -164,6 +164,8 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
     }
 
     public static class ItemFragment extends Fragment implements AdapterView.OnItemClickListener{
+        ArrayList<ItemBean> itemBeanArrayList;
+
         public ItemFragment() {
         }
 
@@ -201,7 +203,7 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
         @Override
         public void onCreate(Bundle savedInstanceState){
             super.onCreate(savedInstanceState);
-            ArrayList<ItemBean> itemBeanArrayList = (ArrayList<ItemBean>) getActivity().getIntent().getSerializableExtra("ItemList");
+            itemBeanArrayList = (ArrayList<ItemBean>) getActivity().getIntent().getSerializableExtra("ItemList");
             Log.d("aa",itemBeanArrayList.get(0).getItem_name());
             int page = getArguments().getInt("ARG_POSITION",0);
 
@@ -235,13 +237,17 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
                     //
                     break;
                 case 1:
-                    for(int i= 0; i<counts;i++){
-                        list[1].add("i="+i);
+                    for(ItemBean itemBean : itemBeanArrayList) {
+                        if(itemBean.getCategory_id().equals("c0001")) {
+                            list[1].add(itemBean.getItem_name());
+                        }
                     }
                     break;
                 case 2:
-                    for(int i= 0; i<counts;i++){
-                        list[2].add("i="+i);
+                    for(ItemBean itemBean : itemBeanArrayList) {
+                        if(itemBean.getCategory_id().equals("c0002")) {
+                            list[2].add(itemBean.getItem_name());
+                        }
                     }
                 default:
                     break;
@@ -257,12 +263,14 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
             // getViewで対象のViewを更新
             parent.getAdapter().getView(position, targetView, parent);
             View iv =  parent.getChildAt(position) ;
-            /////
 
+            /////parent.getAdapter().getItem(position)
             String sharedElementName = "image";
             iv.setTransitionName(sharedElementName);
+            String img = parent.getAdapter().getItem(position).toString();
 
             Intent intent = new Intent(getActivity(), ItemDetailsActivity.class);
+            intent.putExtra("ItemBean",itemBeanArrayList.get(position));
             startActivity(intent,
                     ActivityOptions.makeSceneTransitionAnimation(getActivity(), iv, sharedElementName)
                             .toBundle());

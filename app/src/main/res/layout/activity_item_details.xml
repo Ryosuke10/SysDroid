@@ -62,6 +62,7 @@
             android:layout_height="@dimen/button_height"
             android:layout_gravity="right|center_vertical"
             android:minWidth="@dimen/button_min_width"
+            android:onClick="onClick"
             android:paddingLeft="@dimen/button_horizontal_padding"
             android:paddingRight="@dimen/button_horizontal_padding"
             android:text="@string/buy"
