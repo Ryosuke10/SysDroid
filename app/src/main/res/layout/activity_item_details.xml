@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
     tools:context="com.example.imairy.sysdroid.ItemDetailsActivity">
 
     <LinearLayout
@@ -44,6 +45,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="商品名"
+                android:textColor="#FFF"
                 android:textSize="@dimen/text_header_size" />
 
             <TextView
@@ -52,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="価格"
+                android:textColor="#FFF"
                 android:textSize="@dimen/text_header_size" />
 
         </LinearLayout>
@@ -81,13 +84,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_description_label"
+                android:textColor="#FFF"
                 android:textSize="@dimen/text_header_size" />
 
             <TextView
                 android:id="@+id/itemDescription"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:allowUndo="false" />
+                android:allowUndo="false"
+                android:textColor="#FFF" />
         </LinearLayout>
 
     </LinearLayout>

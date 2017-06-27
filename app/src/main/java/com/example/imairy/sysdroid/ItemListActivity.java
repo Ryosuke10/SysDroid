@@ -36,14 +36,16 @@ import java.util.List;
 public class ItemListActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,NavigationView.OnNavigationItemSelectedListener,View.OnClickListener {
 
     GridView gridView;
+    UserBean userBean;
+    ArrayList<ItemBean> itemBeanArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        UserBean userBean = (UserBean)getIntent().getSerializableExtra("UserBean");
-        ArrayList<ItemBean> itemBeanArrayList = (ArrayList<ItemBean>)getIntent().getSerializableExtra("ItemList");
+        userBean = (UserBean)getIntent().getSerializableExtra("UserBean");
+        itemBeanArrayList = (ArrayList<ItemBean>)getIntent().getSerializableExtra("ItemList");
 
         //actionbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,7 +68,7 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final String genre[] = {"フード","ファッション","ホビー"};
+        final String genre[] = {"All","fashion","hobby"};
 
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -103,7 +105,7 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.tester2, menu);
+//        getMenuInflater().inflate(R.menu.tester2, menu);
         return true;
     }
 
@@ -130,8 +132,15 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
 
         if (id == R.id.nav_item_list) {
             // Handle the camera action
+            Intent intent = new Intent(this,ItemListActivity.class);
+            intent.putExtra("UserBean",userBean);
+            intent.putExtra("ItemList",itemBeanArrayList);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_logout) {
-
+            Intent intent2 = new Intent(this,MainActivity.class);
+            startActivity(intent2);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -238,7 +247,7 @@ public class ItemListActivity extends AppCompatActivity implements ViewPager.OnP
                     break;
                 case 1:
                     for(ItemBean itemBean : itemBeanArrayList) {
-                        if(itemBean.getCategory_id().equals("c0001")) {
+                        if(itemBean.getCategory_id().equals("c0003")) {
                             list[1].add(itemBean.getItem_name());
                         }
                     }

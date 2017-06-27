@@ -15,6 +15,7 @@ public class ItemBean implements Serializable {
     private int price;
     private String category_id;
     private String image;
+    private String item_description;
 
     public ItemBean() {
     }
@@ -25,14 +26,16 @@ public class ItemBean implements Serializable {
         this.price = Integer.parseInt(array.getString("price"));
         this.category_id = array.getString("category_id");
         this.image = array.getString("image");
+        this.item_description = array.getString("item_description");
     }
 
-    public ItemBean(String item_id, String item_name, int price, String category_id, String image) {
+    public ItemBean(String item_id, String item_name, int price, String category_id, String image,String item_description) {
         this.item_id = item_id;
         this.item_name = item_name;
         this.price = price;
         this.category_id = category_id;
         this.image = image;
+        this.item_description = item_description;
     }
 
     public String getItem_id() {
@@ -73,5 +76,13 @@ public class ItemBean implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getItem_description() {
+        return item_description;
+    }
+
+    public void setItem_description(String item_description) {
+        this.item_description = item_description;
     }
 }

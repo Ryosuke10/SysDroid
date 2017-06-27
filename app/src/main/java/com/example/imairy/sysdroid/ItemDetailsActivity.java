@@ -24,7 +24,7 @@ public class ItemDetailsActivity extends AppCompatActivity implements View.OnCli
         TextView itemDescription = (TextView)findViewById(R.id.itemDescription);
         itemName.setText(itemBean.getItem_name());
         price.setText(String.valueOf("￥" + itemBean.getPrice()));
-        itemDescription.setText("テスト用商品です。");
+        itemDescription.setText(itemBean.getItem_description());
  //        ImageView im = (ImageView)findViewById(R.id.itemView);
 //        Bitmap image = BitmapFactory.decodeByteArray(getIntent().getStringExtra("ItemBean").getBytes(),0,getIntent().getStringExtra("ItemBean").getBytes().length);
 
